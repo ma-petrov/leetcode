@@ -1,3 +1,6 @@
+# https://leetcode.com/problems/reverse-bits/
+
+
 # ---- Вариант 1 ----
 
 class Solution:
