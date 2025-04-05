@@ -11,22 +11,17 @@ class Solution:
         # (rigth - left + 1 - most_frequent_count) превышает k.
 
         letters = {}
-        max_length, left, most_frequent_count = 0, 0, 0
+        max_length, left = 0, 0
 
-        for right in range(len(s)):
-            letter = s[right]
+        for right, letter in enumerate(s):
 
             # Обновление кол-ва символов в подстроке и кол-во буквы, которая
             # встречается чаще всего в подстроке. 
             letters[letter] = letters.get(letter, 0) + 1
-            most_frequent_count = max(most_frequent_count, letters[letter])
 
             # Если кол-во заменяемых букв превышает k, нужно даигать левую
-            # границу. Внутри while не обновляется most_frequent_count, так как
-            # в этом нет необходимости, для расчета max_length переменная
-            # most_frequent_count не нужно. most_frequent_count обновится в
-            # начале следующей итерация цикла for.
-            while right - left + 1 - most_frequent_count > k:
+            # границу.
+            while right - left + 1 - max(letters.values()) > k:
                 letters[s[left]] -= 1
                 left += 1
 
