@@ -27,7 +27,7 @@ class Solution:
             nums_count[num] -= 1
             left += 1
 
-            # Попытка найти элемент, елси его не хватает, чтобы подмассив 
+            # Попытка найти элемент, если его не хватает, чтобы подмассив 
             # удовлетворял условию.
             while right < len(nums) and nums_count[num] == 0:
                 nums_count[nums[right]] += 1
