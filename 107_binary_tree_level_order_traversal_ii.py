@@ -1,4 +1,4 @@
-# https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/
+# https://leetcode.com/problems/binary-tree-level-order-traversal-ii/
 
 
 from __future__ import annotations
@@ -12,21 +12,16 @@ class TreeNode:
 
 
 class Solution:    
-    def zigzagLevelOrder(
+    def levelOrderBottom(
         self,
         root: TreeNode | None = None,
     ) -> list[list[int]]:
 
-        if not root:
-            return []
-
-        is_odd = False
         order = []
         level: collections.deque[TreeNode] = collections.deque([root])
 
         while level:
-            level_iterator = reversed(level) if is_odd else level
-            if values := [n.val for n in level_iterator if n]:
+            if values := [n.val for n in level if n]:
                 order.append(values)
 
             for _ in range(len(level)):
@@ -34,6 +29,4 @@ class Solution:
                     level.append(node.left)
                     level.append(node.right)
 
-            is_odd = not is_odd
-
-        return order
+        return order[::-1]
