@@ -12,7 +12,7 @@ class TreeNode:
 
 
 class Solution:    
-    def levelOrder(self, root: TreeNode | None = None) -> list[list[int]]:
+    def levelOrder(self, root: TreeNode | None) -> list[list[int]]:
 
         order = []
         level: collections.deque[TreeNode] = collections.deque([root])

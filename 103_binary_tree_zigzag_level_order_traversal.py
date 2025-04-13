@@ -12,10 +12,7 @@ class TreeNode:
 
 
 class Solution:    
-    def zigzagLevelOrder(
-        self,
-        root: TreeNode | None = None,
-    ) -> list[list[int]]:
+    def zigzagLevelOrder(self, root: TreeNode | None) -> list[list[int]]:
 
         if not root:
             return []

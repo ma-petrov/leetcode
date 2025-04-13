@@ -11,11 +11,8 @@ class TreeNode:
     right: TreeNode | None
 
 
-class Solution:    
-    def levelOrderBottom(
-        self,
-        root: TreeNode | None = None,
-    ) -> list[list[int]]:
+class Solution:
+    def levelOrderBottom(self, root: TreeNode | None) -> list[list[int]]:
 
         order = []
         level: collections.deque[TreeNode] = collections.deque([root])
