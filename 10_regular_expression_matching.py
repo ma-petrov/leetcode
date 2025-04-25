@@ -10,7 +10,7 @@ Step = collections.namedtuple("Step", ["i", "pi"])
 
 class Solution:
     ASTERISK = "*"
-    WILDCARD = "."
+    WILDCARD = "?"
 
     def isMatch(self, s: str, p: str) -> bool:
 
@@ -25,40 +25,36 @@ class Solution:
                 if step.i >= len(s) and step.pi >= len(p):
                     return True
 
-                # Если встретился двойной символ паттерна (со "*")
-                if step.pi < len(p) - 1 and p[step.pi + 1] == self.ASTERISK:
+                if step.pi >= len(p):
+                    continue
 
-                    # Если встретился pattern ".*", то нужно проверить все
-                    # варианты оставшихся подстрок s[l:], где l >= step.i,
-                    # соответствуют ли они паттерну p[step.pi + 2:].
-                    if p[step.pi] == self.WILDCARD:
-                        for l in range(step.i, len(s) + 1):
-                            self.append_step(i=l, pi=step.pi + 2)
-                    
-                    # Если встретился паттерн "<символ>*", то нужно проверить
-                    # все варианты s[l:], где i >= step.i и s[i] == <символ>,
-                    # соответствуют ли они паттерну p[step.pi + 2:], а также
-                    # подстроку s[step:i], так-как кол-во символа в строке
-                    # может быть 0.
-                    else:
-
-                        # Для нулевого кол-ва символа из паттерна:
-                        self.append_step(i=step.i, pi=step.pi + 2)
-
-                        for l in range(step.i + 1, len(s) + 1):
-                            if s[l - 1] != p[step.pi]:
-                                break
-
-                            self.append_step(i=l, pi=step.pi + 2)
-
-                # Если встретился простой паттерн, проверяется только
-                # соответствие символа.
-                elif (
-                    step.i < len(s)
-                    and step.pi < len(p)
-                    and p[step.pi] in (self.WILDCARD, s[step.i])
-                ):
+                # Если встретился патерн "*", то нужно проверить все
+                # варианты оставшихся подстрок s[l:], где l >= step.i,
+                # соответствуют ли они паттерну p[step.pi + 1:].
+                if p[step.pi] == self.ASTERISK:
+                    for l in range(step.i, len(s) + 1):
+                        self.append_step(i=l, pi=step.pi + 1)
+                
+                # Если встретился символ "?", то нужно проверить соответствие
+                # подстроки s[step.i] и паттерну p[step.pi].
+                elif p[step.pi] == self.WILDCARD:
                     self.append_step(i=step.i + 1, pi=step.pi + 1)
+
+                # Если встретился обычный символ, то далее проверяется
+                # подстрока на соответсвие подпатеерну из обычных символов.
+                else:
+                    pi = step.pi
+                    while (
+                        pi < len(p)
+                        and p[pi] not in (self.WILDCARD, self.ASTERISK)
+                    ):
+                        pi += 1
+
+                    subpattern = p[step.pi : pi]
+                    substring = s[step.i : step.i + pi - step.pi]
+                    
+                    if subpattern == substring:
+                        self.append_step(i=step.i + pi - step.pi, pi=pi)
 
         return False
 
