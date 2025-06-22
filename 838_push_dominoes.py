@@ -66,6 +66,3 @@ class Solution:
                 moved_dominoes[move[0]] = move[1]
         
         return "".join(moved_dominoes)
-
-
-print(Solution().pushDominoes(".L.R...LR..L.."))
